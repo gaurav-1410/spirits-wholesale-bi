@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Product_Group",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Valid_From",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Valid_To",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Rate_EUR_per_hl_pure_alcohol",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Legal_Basis",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  }
+]

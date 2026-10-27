@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Document_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Line_No",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Type",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "No",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Primary key (Business Central \"No.\")"
+  },
+  {
+    "name": "Location_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Unit_of_Measure_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Quantity",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Quantity in bottles (FL)"
+  },
+  {
+    "name": "Direct_Unit_Cost",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Line_Amount",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Expected_Receipt_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Quantity_Received",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  }
+]

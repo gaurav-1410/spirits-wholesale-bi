@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Rate_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Currency_Code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Empty = EUR (local currency)"
+  },
+  {
+    "name": "Exchange_Rate",
+    "type": "FLOAT64",
+    "mode": "NULLABLE",
+    "description": "Units of foreign currency per 1 EUR (ECB convention)"
+  }
+]

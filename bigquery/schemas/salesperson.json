@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Name",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Region",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Territory",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "E_Mail",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Start_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  }
+]

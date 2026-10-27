@@ -1,0 +1,337 @@
+
+DEFINE
+
+    // ---------------------------------------------------------------- Helpers
+    MEASURE '_Measures'[Report Date] =
+        MAX ( report_parameters[report_date] )
+
+    MEASURE '_Measures'[Data As Of] =
+        "Data as of " & FORMAT ( [Report Date], "dd.MM.yyyy" )
+
+    // ------------------------------------------------------------------ Sales
+    MEASURE '_Measures'[Net Sales] =
+        SUM ( fact_sales[net_sales_eur] )
+
+    MEASURE '_Measures'[Gross Sales] =
+        SUM ( fact_sales[gross_sales_eur] )
+
+    MEASURE '_Measures'[Discounts] =
+        SUM ( fact_sales[discount_amount_eur] )
+
+    MEASURE '_Measures'[Discount %] =
+        DIVIDE ( [Discounts], [Gross Sales] )
+
+    MEASURE '_Measures'[Cost of Sales] =
+        SUM ( fact_sales[cost_of_sales_eur] )
+
+    MEASURE '_Measures'[Gross Margin] =
+        [Net Sales] - [Cost of Sales]
+
+    MEASURE '_Measures'[Gross Margin %] =
+        DIVIDE ( [Gross Margin], [Net Sales] )
+
+    MEASURE '_Measures'[Bottles Sold] =
+        SUM ( fact_sales[quantity_bottles] )
+
+    MEASURE '_Measures'[Volume (L)] =
+        SUM ( fact_sales[volume_l] )
+
+    MEASURE '_Measures'[Pure Alcohol (L)] =
+        SUM ( fact_sales[pure_alcohol_l] )
+
+    MEASURE '_Measures'[Excise Duty in COGS] =
+        SUM ( fact_sales[excise_duty_eur] )
+
+    MEASURE '_Measures'[Excise Share of COGS %] =
+        DIVIDE ( [Excise Duty in COGS], [Cost of Sales] )
+
+    MEASURE '_Measures'[Invoices] =
+        DISTINCTCOUNT ( fact_sales[invoice_no] )
+
+    MEASURE '_Measures'[Avg Invoice Value] =
+        DIVIDE ( [Net Sales], [Invoices] )
+
+    MEASURE '_Measures'[Avg Net Price per Bottle] =
+        DIVIDE ( [Net Sales], [Bottles Sold] )
+
+    MEASURE '_Measures'[Net Sales Share %] =
+        DIVIDE ( [Net Sales], CALCULATE ( [Net Sales], ALLSELECTED () ) )
+
+    // ---------------------------------------------------- Time intelligence
+    // YTD measures stop at the last actual date, so 2026 YTD (Jan–Sep) is compared
+    // with Jan–Sep 2025 and not with the full year 2025.
+    MEASURE '_Measures'[Net Sales PY] =
+        CALCULATE ( [Net Sales], SAMEPERIODLASTYEAR ( dim_date[date] ) )
+
+    MEASURE '_Measures'[Net Sales YoY %] =
+        DIVIDE ( [Net Sales] - [Net Sales PY], [Net Sales PY] )
+
+    MEASURE '_Measures'[Net Sales YTD] =
+        VAR LastVisible = MIN ( MAX ( dim_date[date] ), [Report Date] )
+        RETURN
+            CALCULATE (
+                [Net Sales],
+                DATESBETWEEN ( dim_date[date], DATE ( YEAR ( LastVisible ), 1, 1 ), LastVisible )
+            )
+
+    MEASURE '_Measures'[Net Sales PYTD] =
+        VAR LastVisible = MIN ( MAX ( dim_date[date] ), [Report Date] )
+        VAR PYEnd = EDATE ( LastVisible, -12 )
+        RETURN
+            CALCULATE (
+                [Net Sales],
+                DATESBETWEEN ( dim_date[date], DATE ( YEAR ( PYEnd ), 1, 1 ), PYEnd )
+            )
+
+    MEASURE '_Measures'[Net Sales YTD YoY %] =
+        DIVIDE ( [Net Sales YTD] - [Net Sales PYTD], [Net Sales PYTD] )
+
+    MEASURE '_Measures'[Gross Margin YTD] =
+        VAR LastVisible = MIN ( MAX ( dim_date[date] ), [Report Date] )
+        RETURN
+            CALCULATE (
+                [Gross Margin],
+                DATESBETWEEN ( dim_date[date], DATE ( YEAR ( LastVisible ), 1, 1 ), LastVisible )
+            )
+
+    MEASURE '_Measures'[Gross Margin % YTD] =
+        DIVIDE ( [Gross Margin YTD], [Net Sales YTD] )
+
+    MEASURE '_Measures'[Net Sales R12M] =
+        CALCULATE (
+            [Net Sales],
+            DATESINPERIOD ( dim_date[date], MIN ( MAX ( dim_date[date] ), [Report Date] ), -12, MONTH )
+        )
+
+    // ------------------------------------------------------------------ Budget
+    // Budget exists per salesperson x item category x month only.
+    // It is hidden when the visual is filtered by customer or item attributes.
+    MEASURE '_Measures'[Budget] =
+        IF (
+            ISFILTERED ( dim_customer ) || ISFILTERED ( dim_item ),
+            BLANK (),
+            SUM ( Budget[Budget_Net_Sales_EUR] )
+        )
+
+    MEASURE '_Measures'[Budget to Date] =
+        CALCULATE ( [Budget], KEEPFILTERS ( dim_date[is_actual_period] = TRUE () ) )
+
+    MEASURE '_Measures'[Budget YTD] =
+        VAR LastVisible = MIN ( MAX ( dim_date[date] ), [Report Date] )
+        RETURN
+            CALCULATE (
+                [Budget],
+                DATESBETWEEN ( dim_date[date], DATE ( YEAR ( LastVisible ), 1, 1 ), LastVisible )
+            )
+
+    MEASURE '_Measures'[Variance to Budget] =
+        IF ( NOT ISBLANK ( [Budget to Date] ), [Net Sales] - [Budget to Date] )
+
+    MEASURE '_Measures'[Budget Achievement %] =
+        DIVIDE ( [Net Sales], [Budget to Date] )
+
+    MEASURE '_Measures'[Budget Achievement % YTD] =
+        DIVIDE ( [Net Sales YTD], [Budget YTD] )
+
+    // --------------------------------------------------------------- Customers
+    MEASURE '_Measures'[Buying Customers] =
+        DISTINCTCOUNT ( fact_sales[customer_no] )
+
+    MEASURE '_Measures'[Buying Customers PY] =
+        CALCULATE ( [Buying Customers], SAMEPERIODLASTYEAR ( dim_date[date] ) )
+
+    MEASURE '_Measures'[Net Sales per Customer] =
+        DIVIDE ( [Net Sales], [Buying Customers] )
+
+    MEASURE '_Measures'[New Customers] =
+        VAR MinD = MIN ( dim_date[date] )
+        VAR MaxD = MAX ( dim_date[date] )
+        RETURN
+            CALCULATE (
+                COUNTROWS ( dim_customer ),
+                dim_customer[first_invoice_date] >= MinD,
+                dim_customer[first_invoice_date] <= MaxD
+            )
+
+    MEASURE '_Measures'[Lost Customers vs PY] =
+        VAR CurrentCust = VALUES ( fact_sales[customer_no] )
+        VAR PreviousCust =
+            CALCULATETABLE ( VALUES ( fact_sales[customer_no] ), SAMEPERIODLASTYEAR ( dim_date[date] ) )
+        RETURN
+            COUNTROWS ( EXCEPT ( PreviousCust, CurrentCust ) )
+
+    MEASURE '_Measures'[Customer Retention %] =
+        VAR CurrentCust = VALUES ( fact_sales[customer_no] )
+        VAR PreviousCust =
+            CALCULATETABLE ( VALUES ( fact_sales[customer_no] ), SAMEPERIODLASTYEAR ( dim_date[date] ) )
+        RETURN
+            DIVIDE ( COUNTROWS ( INTERSECT ( PreviousCust, CurrentCust ) ), COUNTROWS ( PreviousCust ) )
+
+    // -------------------------------------------------------------- Purchasing
+    MEASURE '_Measures'[Purchase Spend] =
+        SUM ( fact_purchase[order_amount_eur] )
+
+    MEASURE '_Measures'[Purchase Orders] =
+        DISTINCTCOUNT ( fact_purchase[po_no] )
+
+    MEASURE '_Measures'[Received PO Lines] =
+        CALCULATE ( COUNTROWS ( fact_purchase ), NOT ISBLANK ( fact_purchase[actual_receipt_date] ) )
+
+    MEASURE '_Measures'[On-Time Delivery %] =
+        DIVIDE (
+            CALCULATE ( COUNTROWS ( fact_purchase ), fact_purchase[is_on_time] = TRUE () ),
+            [Received PO Lines]
+        )
+
+    MEASURE '_Measures'[In-Full Delivery %] =
+        DIVIDE (
+            CALCULATE ( COUNTROWS ( fact_purchase ), fact_purchase[is_in_full] = TRUE () ),
+            [Received PO Lines]
+        )
+
+    MEASURE '_Measures'[OTIF %] =
+        DIVIDE (
+            CALCULATE (
+                COUNTROWS ( fact_purchase ),
+                fact_purchase[is_on_time] = TRUE (),
+                fact_purchase[is_in_full] = TRUE ()
+            ),
+            [Received PO Lines]
+        )
+
+    MEASURE '_Measures'[Avg Delivery Delay (days)] =
+        AVERAGE ( fact_purchase[delivery_delay_days] )
+
+    MEASURE '_Measures'[Avg Lead Time (days)] =
+        AVERAGE ( fact_purchase[actual_lead_time_days] )
+
+    MEASURE '_Measures'[Express Spend %] =
+        DIVIDE ( CALCULATE ( [Purchase Spend], fact_purchase[shipment_method_code] = "EXPRESS" ), [Purchase Spend] )
+
+    MEASURE '_Measures'[Foreign Currency Spend %] =
+        DIVIDE ( CALCULATE ( [Purchase Spend], fact_purchase[currency_code] <> "EUR" ), [Purchase Spend] )
+
+    MEASURE '_Measures'[Open PO Value] =
+        CALCULATE ( [Purchase Spend], fact_purchase[line_status] = "Open" )
+
+    // --------------------------------------------------------------- Inventory
+    // Stock is a snapshot: take the last month end in the current filter context.
+    MEASURE '_Measures'[Last Stock Month] =
+        CALCULATE (
+            MAX ( fact_inventory_monthly[month_end_date] ),
+            REMOVEFILTERS ( dim_item ),
+            REMOVEFILTERS ( dim_item_category )
+        )
+
+    MEASURE '_Measures'[Stock Value] =
+        VAR LastMonth = [Last Stock Month]
+        RETURN
+            CALCULATE (
+                SUM ( fact_inventory_monthly[closing_value_eur] ),
+                fact_inventory_monthly[month_end_date] = LastMonth
+            )
+
+    MEASURE '_Measures'[Stock Qty (bottles)] =
+        VAR LastMonth = [Last Stock Month]
+        RETURN
+            CALCULATE (
+                SUM ( fact_inventory_monthly[closing_qty] ),
+                fact_inventory_monthly[month_end_date] = LastMonth
+            )
+
+    MEASURE '_Measures'[Slow & Dead Stock Value] =
+        CALCULATE (
+            [Stock Value],
+            fact_inventory_monthly[stock_status]
+                IN { "Slow moving (> 180 days cover)", "Dead stock (no sale 6M+)" }
+        )
+
+    MEASURE '_Measures'[Slow & Dead Stock %] =
+        DIVIDE ( [Slow & Dead Stock Value], [Stock Value] )
+
+    MEASURE '_Measures'[Days Inventory Outstanding] =
+        VAR LastMonth = [Last Stock Month]
+        VAR COGS3M =
+            CALCULATE ( [Cost of Sales], DATESINPERIOD ( dim_date[date], LastMonth, -3, MONTH ) )
+        RETURN
+            DIVIDE ( [Stock Value], COGS3M / 91 )
+
+    MEASURE '_Measures'[Items Out of Stock] =
+        VAR LastMonth = [Last Stock Month]
+        RETURN
+            CALCULATE (
+                DISTINCTCOUNT ( fact_inventory_monthly[item_no] ),
+                fact_inventory_monthly[month_end_date] = LastMonth,
+                fact_inventory_monthly[closing_qty] <= 0
+            )
+
+    // ------------------------------------------------------------- Receivables
+    // fact_receivables is a snapshot as of the report date.
+    MEASURE '_Measures'[Open Receivables] =
+        SUM ( fact_receivables[open_amount_eur] )
+
+    MEASURE '_Measures'[Overdue Receivables] =
+        CALCULATE ( [Open Receivables], fact_receivables[days_overdue] > 0 )
+
+    MEASURE '_Measures'[Overdue %] =
+        DIVIDE ( [Overdue Receivables], [Open Receivables] )
+
+    MEASURE '_Measures'[Overdue > 90 Days] =
+        CALCULATE ( [Open Receivables], fact_receivables[days_overdue] > 90 )
+
+    MEASURE '_Measures'[DSO (days)] =
+        VAR RD = [Report Date]
+        VAR GrossSales90 =
+            CALCULATE ( [Net Sales], DATESINPERIOD ( dim_date[date], RD, -90, DAY ) ) * 1.19
+        RETURN
+            DIVIDE ( CALCULATE ( [Open Receivables], REMOVEFILTERS ( dim_date ) ), GrossSales90 ) * 90
+
+    MEASURE '_Measures'[Avg Days to Pay] =
+        AVERAGE ( fact_receivables[days_to_pay] )
+
+    MEASURE '_Measures'[Paid Late %] =
+        DIVIDE (
+            CALCULATE ( COUNTROWS ( fact_receivables ), fact_receivables[days_paid_late] > 0 ),
+            CALCULATE ( COUNTROWS ( fact_receivables ), fact_receivables[is_open] = FALSE () )
+        )
+
+    // ---------------------------------------------- Data quality & controls
+    MEASURE '_Measures'[Exceptions] =
+        COUNTROWS ( dq_exceptions )
+
+    MEASURE '_Measures'[High-Risk Exceptions] =
+        CALCULATE ( [Exceptions], dq_exceptions[risk_level] = "High" )
+
+    MEASURE '_Measures'[Exception Impact (EUR)] =
+        SUM ( dq_exceptions[impact_eur] )
+
+    MEASURE '_Measures'[Controls Total] =
+        COUNTROWS ( dq_check_summary )
+
+    MEASURE '_Measures'[Controls Failed] =
+        CALCULATE ( COUNTROWS ( dq_check_summary ), dq_check_summary[exception_count] > 0 )
+
+    MEASURE '_Measures'[Control Pass Rate %] =
+        DIVIDE ( [Controls Total] - [Controls Failed], [Controls Total] )
+
+    MEASURE '_Measures'[Exceptions per 1,000 Invoices] =
+        DIVIDE ( [Exceptions], [Invoices] ) * 1000
+
+    MEASURE '_Measures'[Control Status Color] =
+        SWITCH (
+            TRUE (),
+            [Exceptions] = 0, "#2E7D5B",
+            [High-Risk Exceptions] > 0, "#B23A3A",
+            "#D08B2C"
+        )
+
+// Quick test: shows a few KPIs per year after running the file
+EVALUATE
+SUMMARIZECOLUMNS (
+    dim_date[year],
+    "Net Sales", [Net Sales],
+    "Gross Margin %", [Gross Margin %],
+    "Budget", [Budget],
+    "Purchase Spend", [Purchase Spend],
+    "OTIF %", [OTIF %]
+)

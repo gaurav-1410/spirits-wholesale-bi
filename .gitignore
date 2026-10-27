@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Large generated ERP exports (recreate with: python generator/generate_data.py)
+data/erp/*.csv
+
+# Optional real ECB download
+data/external/fx_rates_ecb.csv
+
+# Power BI temp / backup files
+*.pbix.bak
+~$*
+.DS_Store
+Thumbs.db

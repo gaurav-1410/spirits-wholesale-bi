@@ -1,0 +1,94 @@
+[
+  {
+    "name": "No",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Primary key (Business Central \"No.\")"
+  },
+  {
+    "name": "Name",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Address",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Post_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "City",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "County",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Country_Region_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Latitude",
+    "type": "FLOAT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Longitude",
+    "type": "FLOAT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Customer_Posting_Group",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Customer_Price_Group",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Sales channel: HORECA, RETAIL, WHOLESALE, ONLINE"
+  },
+  {
+    "name": "Gen_Bus_Posting_Group",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Salesperson_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Payment_Terms_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Credit_Limit_LCY",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Blocked",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Blocked_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Created_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  }
+]

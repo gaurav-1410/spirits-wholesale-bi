@@ -1,0 +1,45 @@
+{
+  "name": "Hanse Spirits",
+  "dataColors": [
+    "#1F3A5F",
+    "#C8873A",
+    "#2E8B87",
+    "#8C4A6B",
+    "#6E8B3D",
+    "#D9A441",
+    "#4F6D8A",
+    "#A65E2E",
+    "#7FA7A3",
+    "#B9B2A7"
+  ],
+  "good": "#2E7D5B",
+  "neutral": "#D08B2C",
+  "bad": "#B23A3A",
+  "maximum": "#1F3A5F",
+  "center": "#E8E2D6",
+  "minimum": "#F7F4EE",
+  "background": "#FFFFFF",
+  "foreground": "#1E2329",
+  "tableAccent": "#C8873A",
+  "textClasses": {
+    "callout": { "fontFace": "Segoe UI Semibold", "fontSize": 26, "color": "#1F3A5F" },
+    "title": { "fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#1E2329" },
+    "header": { "fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#1E2329" },
+    "label": { "fontFace": "Segoe UI", "fontSize": 10, "color": "#4A4F57" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }],
+        "border": [{ "show": false }],
+        "visualHeader": [{ "show": true }],
+        "dropShadow": [{ "show": false }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#F7F4EE" } }, "transparency": 0 }]
+      }
+    }
+  }
+}

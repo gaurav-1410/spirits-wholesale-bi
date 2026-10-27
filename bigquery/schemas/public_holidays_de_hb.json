@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Holiday_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Holiday_Name",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Subdivision",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  }
+]

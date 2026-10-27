@@ -1,0 +1,59 @@
+[
+  {
+    "name": "No",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Primary key (Business Central \"No.\")"
+  },
+  {
+    "name": "Buy_from_Vendor_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Buy_from_Vendor_Name",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Order_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Expected_Receipt_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Currency_Code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Empty = EUR (local currency)"
+  },
+  {
+    "name": "Shipment_Method_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Status",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Created_By",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Approved_By",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Approval_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  }
+]

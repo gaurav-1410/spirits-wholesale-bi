@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Document_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Line_No",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Type",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "No",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Primary key (Business Central \"No.\")"
+  },
+  {
+    "name": "Location_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Unit_of_Measure_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Quantity",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Quantity in bottles (FL)"
+  },
+  {
+    "name": "Unit_Price",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Line_Discount_Pct",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Line discount in percent (policy max 25 %)"
+  },
+  {
+    "name": "Line_Discount_Amount",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Amount",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Net amount after line discount, excl. VAT, EUR"
+  },
+  {
+    "name": "Amount_Including_VAT",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Unit_Cost_LCY",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Landed, duty-paid unit cost in EUR at time of sale"
+  }
+]

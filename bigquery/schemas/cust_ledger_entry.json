@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Entry_No",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Customer_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Posting_Date",
+    "type": "DATE",
+    "mode": "NULLABLE",
+    "description": "Date the document was posted in the ERP"
+  },
+  {
+    "name": "Document_Type",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Document_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Amount_LCY",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Remaining_Amt_LCY",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Open (unpaid) amount incl. VAT, EUR"
+  },
+  {
+    "name": "Due_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Open",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Closed_at_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Salesperson_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  }
+]

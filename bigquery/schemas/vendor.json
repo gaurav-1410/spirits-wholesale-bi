@@ -1,0 +1,44 @@
+[
+  {
+    "name": "No",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Primary key (Business Central \"No.\")"
+  },
+  {
+    "name": "Name",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Country_Region_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Currency_Code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Empty = EUR (local currency)"
+  },
+  {
+    "name": "Payment_Terms_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Lead_Time_Days",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Vendor_Posting_Group",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Blocked",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  }
+]

@@ -1,0 +1,78 @@
+[
+  {
+    "name": "No",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Primary key (Business Central \"No.\")"
+  },
+  {
+    "name": "Description",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Item_Category_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Brand",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Vendor_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Base_Unit_of_Measure",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Bottle_Size_L",
+    "type": "FLOAT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Alcohol_Pct",
+    "type": "FLOAT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Country_of_Origin",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Unit_Price",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Unit_Cost",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Last_Direct_Cost",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Blocked",
+    "type": "BOOL",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Blocked_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Created_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  }
+]

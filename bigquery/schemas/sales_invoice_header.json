@@ -1,0 +1,91 @@
+[
+  {
+    "name": "No",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Primary key (Business Central \"No.\")"
+  },
+  {
+    "name": "Sell_to_Customer_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Sell_to_Customer_Name",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Sell_to_City",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Sell_to_Post_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Posting_Date",
+    "type": "DATE",
+    "mode": "NULLABLE",
+    "description": "Date the document was posted in the ERP"
+  },
+  {
+    "name": "Document_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Due_Date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Payment_Terms_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Salesperson_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Currency_Code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Empty = EUR (local currency)"
+  },
+  {
+    "name": "Location_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Shipment_Method_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Order_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "User_ID",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Amount",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Net amount after line discount, excl. VAT, EUR"
+  },
+  {
+    "name": "Amount_Including_VAT",
+    "type": "NUMERIC",
+    "mode": "NULLABLE"
+  }
+]

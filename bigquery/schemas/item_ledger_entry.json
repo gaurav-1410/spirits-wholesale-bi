@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Entry_No",
+    "type": "INT64",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Item_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Posting_Date",
+    "type": "DATE",
+    "mode": "NULLABLE",
+    "description": "Date the document was posted in the ERP"
+  },
+  {
+    "name": "Entry_Type",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Document_Type",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Document_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Order_No",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Location_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "Quantity",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Quantity in bottles (FL)"
+  },
+  {
+    "name": "Reason_Code",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  }
+]
